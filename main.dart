@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dart_frog/dart_frog.dart';
-import 'package:dotenv/dotenv.dart';
 import 'package:hidden_room_backend/database/mongo_database.dart';
 
 
