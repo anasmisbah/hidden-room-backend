@@ -1,21 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'room_model.dart';
+part of 'room_entity.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_RoomModel _$$_RoomModelFromJson(Map<String, dynamic> json) => _$_RoomModel(
-      id: json['_id'] as String,
+RoomEntity _$RoomEntityFromJson(Map<String, dynamic> json) => RoomEntity(
+      id: const ObjectIdConvertor().fromJson(json['_id'] as ObjectId),
       roomCode: json['roomCode'] as String,
       maxUsers: json['maxUsers'] as int,
       onlineUsers: json['onlineUsers'] as int,
     );
 
-Map<String, dynamic> _$$_RoomModelToJson(_$_RoomModel instance) =>
+Map<String, dynamic> _$RoomEntityToJson(RoomEntity instance) =>
     <String, dynamic>{
-      '_id': instance.id,
+      '_id': const ObjectIdConvertor().toJson(instance.id),
       'roomCode': instance.roomCode,
       'maxUsers': instance.maxUsers,
       'onlineUsers': instance.onlineUsers,
