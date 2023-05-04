@@ -3,9 +3,10 @@ import 'dart:developer';
 import 'package:mongo_dart/mongo_dart.dart';
 
 class MongoDatabase {
-  MongoDatabase({required this.mongoUrl});
+  MongoDatabase._private();
 
-  final String mongoUrl;
+  static MongoDatabase instance = MongoDatabase._private();
+
   Db? _db;
 
   Future<Db> get db async {
@@ -14,10 +15,10 @@ class MongoDatabase {
   }
 
   Future<Db> _initDb() async {
-    log('Try Open Database');
-    final db = Db(mongoUrl);
+    print('Try Open Database');
+    final db = Db('mongodb://localhost:27017/hidden_room');
     await db.open();
-    log('Success Opened Database');
+    print('Success Opened Database');
 
     return db;
   }
