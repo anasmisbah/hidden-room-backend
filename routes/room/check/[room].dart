@@ -8,7 +8,6 @@ Future<Response> onRequest(RequestContext context, String room) async {
   final response = await context.read<RoomRepository>().checkRoom(
         roomCode: room.toUpperCase(),
       );
-  print(response);
   if (response == null) {
     return Response.json(
       body: {
