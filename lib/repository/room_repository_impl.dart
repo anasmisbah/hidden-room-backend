@@ -10,7 +10,7 @@ class RoomRepositoryImpl extends RoomRepository {
   final MongoDatabase database = MongoDatabase.instance;
   @override
   Future<RoomModel> createRoom({required int maxUser}) async {
-    String roomId = generateRandomString(5);
+    String roomId = await generateRandomString(5);
 
     Db db = await database.db;
 
@@ -23,10 +23,22 @@ class RoomRepositoryImpl extends RoomRepository {
     return RoomModel.fromEntity(RoomEntity.fromJson(result.document!));
   }
 
-  String generateRandomString(int len) {
+  Future<String> generateRandomString(int len) async {
     final random = Random();
     final result = String.fromCharCodes(
-        List.generate(len, (index) => 65 + random.nextInt(26)));
-    return result.toUpperCase();
+        List.generate(len, (index) => 65 + random.nextInt(26))).toUpperCase();
+    if (await checkRoom(roomCode: result) != null) {
+      await generateRandomString(len);
+    }
+    return result;
+  }
+
+  @override
+  Future<RoomModel?> checkRoom({required String roomCode}) async {
+    Db db = await database.db;
+    final result =
+        await db.collection('rooms').findOne(where.eq('roomCode', roomCode));
+    if (result == null) return null;
+    return RoomModel.fromEntity(RoomEntity.fromJson(result));
   }
 }
