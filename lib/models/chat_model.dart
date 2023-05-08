@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hidden_room_backend/database/entity/chat_entity.dart';
 
 part 'chat_model.freezed.dart';
 part 'chat_model.g.dart';
@@ -15,4 +16,12 @@ class ChatModel with _$ChatModel {
 
   factory ChatModel.fromJson(Map<String, dynamic> json) =>
       _$ChatModelFromJson(json);
+  
+  factory ChatModel.fromEntity(ChatEntity chatEntity) => ChatModel(
+        id: chatEntity.id.$oid,
+        roomCode: chatEntity.roomCode,
+        username: chatEntity.username,
+        text: chatEntity.text,
+        time: chatEntity.time,
+      );
 }
