@@ -1,7 +1,9 @@
 import 'dart:math';
 
+import 'package:hidden_room_backend/database/entity/chat_entity.dart';
 import 'package:hidden_room_backend/database/entity/room_entity.dart';
 import 'package:hidden_room_backend/database/mongo_database.dart';
+import 'package:hidden_room_backend/models/chat_model.dart';
 import 'package:hidden_room_backend/models/room_model.dart';
 import 'package:hidden_room_backend/repository/room_repository.dart';
 import 'package:mongo_dart/mongo_dart.dart';
@@ -40,5 +42,16 @@ class RoomRepositoryImpl extends RoomRepository {
         await db.collection('rooms').findOne(where.eq('roomCode', roomCode));
     if (result == null) return null;
     return RoomModel.fromEntity(RoomEntity.fromJson(result));
+  }
+
+  @override
+  Future<void> updateOnlineUsersRoom(
+      {required String roomCode, int newCountOnlineUser = 0}) async {
+    // TODO: implement updateOnlineUsersRoom
+    final db = await database.db;
+    await db.collection('rooms').updateOne(
+          where.eq('roomCode', roomCode),
+          modify.set('onlineUsers', newCountOnlineUser),
+        );
   }
 }
